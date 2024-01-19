@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RunGroupWebApp.Data;
+using RunGroupWebApp.Repository;
+using RunGroupWebApp.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddTransient<IClubRepository, ClubRepository>();
+builder.Services.AddTransient<IRaceRepository, RaceRepository>();
 
 var app = builder.Build();
 
