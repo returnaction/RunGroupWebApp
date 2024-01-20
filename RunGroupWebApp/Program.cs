@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using RunGroupWebApp.Data;
+using RunGroupWebApp.Helpers;
 using RunGroupWebApp.Repository;
 using RunGroupWebApp.Repository.Interfaces;
+using RunGroupWebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IClubRepository, ClubRepository>();
 builder.Services.AddScoped<IRaceRepository, RaceRepository>();
+builder.Services.AddScoped<IPhotoService, PhotoService>();
+
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
 var app = builder.Build();
 
@@ -42,4 +47,9 @@ app.MapControllerRoute(
 
 app.Run();
 
+// repo link
 //https://github.com/teddysmithdev/RunGroop
+
+
+// stoped at
+//https://www.youtube.com/watch?v=OL8cCsGQ1N8&list=PL82C6-O4XrHde_urqhKJHH-HTUfTK6siO&index=8
