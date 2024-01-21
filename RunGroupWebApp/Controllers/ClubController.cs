@@ -68,5 +68,81 @@ namespace RunGroupWebApp.Controllers
                 return View(clubVM);
             }
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            Club? club = await _clubRepository.GetByIdAsync(id);
+            if (club is null) return View("Error");
+
+            var clubVM = new EditClubViewModel
+            {
+                Title = club.Title,
+                Description = club.Description,
+                URL = club.Image,
+                ClubCategory = club.ClubCategory,
+                AddressId = club.AddressId,
+                Address = new Address
+                {
+                    Id = club.Address.Id,
+                    Street = club.Address.Street,
+                    City = club.Address.City,
+                    State = club.Address.State
+                }
+            };
+            return View(clubVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditClubViewModel clubVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit club");
+                return View("Edit", clubVM);
+            }
+
+            var userClub = await _clubRepository.GetByIdAsyncNoTracking(id);
+
+            if (userClub != null)
+            {
+                try
+                {
+                    await _photoService.DeletePhotoAsync(userClub.Image);
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("", "Could not delete photo");
+                    return View(clubVM);
+                }
+
+
+                var photoResult = await _photoService.AddPhotoAsync(clubVM.Image);
+
+                var club = new Club
+                {
+                    Id = id,
+                    Title = clubVM.Title,
+                    Description = clubVM.Description,
+                    Image = photoResult.Url.ToString(),
+                    ClubCategory = clubVM.ClubCategory,
+                    AddressId = clubVM.AddressId,
+                    Address = new Address
+                    {
+                        Id = clubVM.AddressId,
+                        Street = clubVM.Address.Street,
+                        City = clubVM.Address.City,
+                        State = clubVM.Address.State,
+                    }
+                };
+
+                _clubRepository.Update(club);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(clubVM);
+            }
+
+        }
     }
 }
