@@ -61,5 +61,9 @@ app.Run();
 
 
 // stoped at
-//https://www.youtube.com/watch?v=bf3nzcmRbT4&list=PL82C6-O4XrHde_urqhKJHH-HTUfTK6siO&index=11
-//17:08
+//https://www.youtube.com/watch?v=Sakn-nTgT84&list=PL82C6-O4XrHde_urqhKJHH-HTUfTK6siO&index=14
+//1:53
+
+
+// bambo2835@gmail.com
+// sdlkfs235!G
