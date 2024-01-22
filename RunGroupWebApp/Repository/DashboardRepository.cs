@@ -19,16 +19,18 @@ namespace RunGroupWebApp.Repository
 
         public async Task<List<Club>> GetAllUSerClubs()
         {
-            ClaimsPrincipal? curUser = _httpContextAccessor.HttpContext?.User;
+            var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
             var userClubs = _context.Clubs.Where(c => c.AppUser.Id == curUser.ToString());
             return userClubs.ToList();
         }
 
         public async Task<List<Race>> GetAllUserRaces()
         {
-            ClaimsPrincipal? curUser = _httpContextAccessor.HttpContext?.User;
+            var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
             var userRaces = _context.Races.Where(r => r.AppUser.Id == curUser.ToString());
             return userRaces.ToList();
         }
     }
 }
+
+

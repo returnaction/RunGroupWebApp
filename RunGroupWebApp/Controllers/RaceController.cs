@@ -5,6 +5,7 @@ using RunGroupWebApp.Data;
 using RunGroupWebApp.Models;
 using RunGroupWebApp.Repository.Interfaces;
 using RunGroupWebApp.ViewModels;
+using System.Runtime.CompilerServices;
 
 namespace RunGroupWebApp.Controllers
 {
@@ -12,11 +13,13 @@ namespace RunGroupWebApp.Controllers
     {
         private readonly IRaceRepository _raceRepository;
         private readonly IPhotoService _photoService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RaceController(ApplicationDbContext context, IRaceRepository raceRepository, IPhotoService photoService)
+        public RaceController(ApplicationDbContext context, IRaceRepository raceRepository, IPhotoService photoService, IHttpContextAccessor httpContextAccessor)
         {
             _raceRepository = raceRepository;
             _photoService = photoService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> Index()
@@ -34,7 +37,9 @@ namespace RunGroupWebApp.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            string? curUserId = _httpContextAccessor.HttpContext?.User.GetUserId();
+            var createRaceViewModel = new CreateRaceViewModel { AppUserId = curUserId };
+            return View(createRaceViewModel);
         }
 
         [HttpPost]
@@ -49,6 +54,7 @@ namespace RunGroupWebApp.Controllers
                     Title = raceVM.Title,
                     Description = raceVM.Description,
                     Image = result.Url.ToString(),
+                    AppUserId = raceVM.AppUserId,
                     Address = new Address
                     {
                         Street = raceVM.Address.Street,
