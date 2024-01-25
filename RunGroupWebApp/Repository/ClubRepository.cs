@@ -39,6 +39,7 @@ namespace RunGroupWebApp.Repository
         {
             Club? club = await _context.Clubs
                 .Include(a=>a.Address)
+                .Include(u=>u.AppUser)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             return club;
@@ -72,7 +73,7 @@ namespace RunGroupWebApp.Repository
         public bool Save()
         {
             int saved =  _context.SaveChanges();
-            return saved > 0;
+            return saved > 0 ? true : false;
         }
 
         public bool Update(Club club)

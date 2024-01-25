@@ -87,6 +87,13 @@ namespace RunGroupWebApp.Controllers
                 URL = club.Image,
                 ClubCategory = club.ClubCategory,
                 AddressId = club.AddressId,
+                AppUserId = club.AppUserId,
+                AppUser = new AppUser
+                {
+                    Id = club.AppUser.Id,
+
+                },
+               
                 Address = new Address
                 {
                     Id = club.Address.Id,

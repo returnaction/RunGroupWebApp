@@ -71,7 +71,7 @@ namespace RunGroupWebApp.Repository
         public bool Save()
         {
             int saved = _context.SaveChanges();
-            return saved > 0;
+            return saved > 0 ? true : false;
         }
 
         public bool Update(Race race)

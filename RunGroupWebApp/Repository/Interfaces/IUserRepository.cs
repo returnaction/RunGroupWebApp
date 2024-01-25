@@ -2,14 +2,13 @@
 
 namespace RunGroupWebApp.Repository.Interfaces
 {
-    public interface IDashboardRepository
+    public interface IUserRepository
     {
-        Task<List<Race>> GetAllUserRaces();
-        Task<List<Club>> GetAllUSerClubs();
+        Task<IEnumerable<AppUser>> GetAllUsers();
         Task<AppUser> GetUserById(string id);
-        Task<AppUser> GetByIdAsNoTracking(string id);
-
+        bool Add(AppUser user);
         bool Update(AppUser user);
+        bool Delete(AppUser user);
         bool Save();
     }
 }
