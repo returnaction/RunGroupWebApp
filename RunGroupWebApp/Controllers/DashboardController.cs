@@ -51,13 +51,13 @@ namespace RunGroupWebApp.Controllers
 
                 URL = user.ProfileImageUrl,
                 AddressId = user.AddressId,
-                Address = new Address
-                {
-                    Id = user.Address.Id,
-                    City = user.Address.City,
-                    Street = user.Address.Street,
-                    State = user.Address.State,
-                }
+                //Address = new Address
+                //{
+                //    Id = user.AddressId,
+                //    City = user.Address.City,
+                //    Street = user.Address.Street,
+                //    State = user.Address.State,
+                //}
 
                 //Street = user.Address.Street,
                 //City = user.Address.City,
@@ -92,6 +92,7 @@ namespace RunGroupWebApp.Controllers
                 // it's better to put that in the different function
                 user.Pace = editVM.Pace;
                 user.Mileage = editVM.Milage;
+                
                 user.Address.Street = editVM.Address.Street;
                 user.Address.City = editVM.Address.City;
                 user.Address.State = editVM.Address.State;

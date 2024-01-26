@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RunGroupWebApp.Models;
 using RunGroupWebApp.Repository.Interfaces;
 using RunGroupWebApp.ViewModels;
 
@@ -20,12 +21,16 @@ namespace RunGroupWebApp.Controllers
             List<UserViewModel> result = new List<UserViewModel>();
             foreach(var user in users)
             {
-                var userViewModel = new UserViewModel()
+                UserViewModel userViewModel = new UserViewModel
                 {
                     Id = user.Id,
                     UserName = user.UserName,
                     Pace = user.Pace,
-                    Milage = user.Mileage
+                    Milage = user.Mileage,
+                   
+
+                    ProfileImageUrl = user.ProfileImageUrl
+                    
                 };
 
                 result.Add(userViewModel);
